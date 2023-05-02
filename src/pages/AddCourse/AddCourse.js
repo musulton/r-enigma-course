@@ -6,6 +6,10 @@ import FormSelect from "../../components/FormSelect";
 import useAddCourse from "./useAddCourse";
 import {StyledTitle, StyledContainer} from "./AddCourse.styled";
 import constants from "../../constants";
+import useMutation from "../../hooks/useMutation";
+import { addCourse } from "../../services/course";
+import useQuery from "../../hooks/useQuery";
+import { getCourseTypes } from "../../services/courseType";
 
 const FORM_LIST = [
     { id: "title", label: "Title", type: "text", placeholder: "Enter course title" },
@@ -18,14 +22,35 @@ const FORM_LIST = [
 const AddCourse = (props) => {
     const {onNavigate} = props
     const {getter, setter} = useAddCourse()
+    const {onMutation, loading} = useMutation(addCourse, {
+        onSuccess: () => {
+            onNavigate(constants.routes.COURSE_LIST)
+        },
+        onError: () => {}
+    })
+    const {data: courseTypes} = useQuery(getCourseTypes)
 
     const onSubmit = (e) => {
         e.preventDefault()
+        const payload = new FormData();
+
+        payload.append("title", getter.title);
+        payload.append("description", getter.description);
+        payload.append("courseTypeId", getter.courseTypeId);
+        payload.append("file", getter.courseFile);
+        payload.append("duration", getter.duration);
+        payload.append("level", getter.level);
+
+        onMutation(payload)
     }
 
     const onCancel = (e) => {
         e.preventDefault()
         onNavigate(constants.routes.COURSE_LIST)
+    }
+
+    if (loading) {
+        return <h3 className="m-3">Loading...</h3>
     }
 
     return (
@@ -46,9 +71,12 @@ const AddCourse = (props) => {
                     placeholder="Enter course type id"
                     onChange={setter.courseTypeId}
                     value={getter.courseTypeId}
-                    values={[
-                        { value: "12345", label: "Type Id 12345" }
-                    ]}
+                    values={courseTypes?.data?.map((type) => {
+                        return {
+                            value: type.courseTypeId,
+                            label: type.typeName
+                        }
+                    })}
                 />
                 <ButtonGroup>
                     <Button variant="success" size={"lg"} onClick={onSubmit}>Submit</Button>
