@@ -2,7 +2,7 @@ import CourseItem from "./components/CourseItem";
 import {StyledListGroup} from "./CourseList.styled";
 import constants from "../../constants";
 import useMutation from "../../hooks/useMutation";
-import { getCourses, deleteCourse } from "../../services/course";
+import { getCourses, deleteCourse, downloadCourseFile } from "../../services/course";
 import withPagination from "../../hoc/withPagination";
 
 const ListItem = (props) => {
@@ -24,6 +24,13 @@ const ListItem = (props) => {
         })
     }
 
+    const onDownload = (fileLink) => () => {
+        const path = fileLink?.split("\\");
+        const filename = path[path.length - 1];
+
+        downloadCourseFile(filename);
+    }
+
     return (
         <StyledListGroup>
             {data.map((course, index) => {
@@ -34,6 +41,7 @@ const ListItem = (props) => {
                         key={index}
                         onDelete={onDeleteHandler(course.courseId)}
                         onEdit={onEditHandler(course.courseId)}
+                        onDownload={onDownload(course.link)}
                     />
                 )
             })}
