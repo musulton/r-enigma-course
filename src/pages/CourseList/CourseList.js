@@ -6,10 +6,20 @@ import {StyledListGroup} from "./CourseList.styled";
 import StyledContainer from "../../components/StyledContainer";
 import constants from "../../constants";
 import useQuery from "../../hooks/useQuery";
-import { getCourses } from "../../services/course";
+import useMutation from "../../hooks/useMutation";
+import { getCourses, deleteCourse } from "../../services/course";
 
 const ListItem = (props) => {
-    const {data} = props;
+    const {data, refetch} = props;
+    const {onMutation: onDelete} = useMutation(deleteCourse, {
+        onSuccess: refetch
+    })
+
+    const onDeleteHandler = (id) => () => {
+        const isOk = window.confirm("Apa kamu yakin akan menghapus course ini?")
+        if (isOk) onDelete(id)
+    }
+
     return (
         <StyledListGroup>
             {data.map((course, index) => {
@@ -18,6 +28,7 @@ const ListItem = (props) => {
                         title={course.title}
                         description={course.description}
                         key={index}
+                        onDelete={onDeleteHandler(course.courseId)}
                     />
                 )
             })}
@@ -27,8 +38,8 @@ const ListItem = (props) => {
 
 const CourseList = (props) => {
     const {onNavigate} = props;
-    const {data} = useQuery(getCourses);
-    
+    const {data, refetch} = useQuery(getCourses);
+
     return (
         <StyledContainer>
             <h1>Course List Page</h1>
@@ -40,7 +51,7 @@ const CourseList = (props) => {
             </Button>
             {
                 data?.data?.length > 0 ?
-                <ListItem data={data?.data} /> :
+                <ListItem data={data?.data} refetch={refetch} /> :
                 <EmptyState text="Data masih kosong" />
             }
         </StyledContainer>

@@ -11,3 +11,7 @@ export const addCourse = (payload) => {
         }
     })
 }
+
+export const deleteCourse = (id) => {
+    return api.delete("/courses/" + id)
+}
