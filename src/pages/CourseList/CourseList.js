@@ -5,6 +5,8 @@ import CourseItem from "./components/CourseItem";
 import {StyledListGroup} from "./CourseList.styled";
 import StyledContainer from "../../components/StyledContainer";
 import constants from "../../constants";
+import useQuery from "../../hooks/useQuery";
+import { getCourses } from "../../services/course";
 
 const ListItem = (props) => {
     const {data} = props;
@@ -24,7 +26,9 @@ const ListItem = (props) => {
 }
 
 const CourseList = (props) => {
-    const {courses, onNavigate} = props;
+    const {onNavigate} = props;
+    const {data} = useQuery(getCourses);
+    
     return (
         <StyledContainer>
             <h1>Course List Page</h1>
@@ -35,8 +39,8 @@ const CourseList = (props) => {
                 Add Course
             </Button>
             {
-                courses.length > 0 ?
-                <ListItem data={courses} /> :
+                data?.data?.length > 0 ?
+                <ListItem data={data?.data} /> :
                 <EmptyState text="Data masih kosong" />
             }
         </StyledContainer>
