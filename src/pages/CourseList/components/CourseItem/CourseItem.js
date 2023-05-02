@@ -3,7 +3,7 @@ import {Button, ButtonGroup, Col} from "react-bootstrap";
 import {StyledListItem} from "./CourseItem.styled";
 
 const CourseItem = (props) => {
-    const {title, description, onDelete} = props;
+    const {title, description, onDelete, onEdit} = props;
     return (
         <StyledListItem>
             <Col>
@@ -11,7 +11,7 @@ const CourseItem = (props) => {
                 <p>{description}</p>
             </Col>
             <ButtonGroup>
-                <Button variant="primary">Edit</Button>
+                <Button variant="primary" onClick={onEdit}>Edit</Button>
                 <Button variant="danger" onClick={onDelete}>Delete</Button>
                 <Button variant="secondary">Download</Button>
             </ButtonGroup>

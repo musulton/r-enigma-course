@@ -1,8 +1,10 @@
 import React from "react";
-import {FormControl, FormGroup, FormLabel} from "react-bootstrap";
+import {FormControl, FormGroup, FormLabel, Form} from "react-bootstrap";
+
+const isFileOrNotObject = (value, type) => type === "file" && (typeof value !== "object")
 
 const FormInput = (props) => {
-    const {label, type, placeholder, value, onChange} = props
+    const {label, type, placeholder, value, onChange, disabled} = props
     let formProps;
 
     switch (type) {
@@ -24,7 +26,9 @@ const FormInput = (props) => {
                 {...formProps}
                 placeholder={placeholder}
                 onChange={onChange}
+                disabled={disabled}
             />
+            {isFileOrNotObject(value, type) && <Form.Text>{value}</Form.Text>}
         </FormGroup>
     )
 }

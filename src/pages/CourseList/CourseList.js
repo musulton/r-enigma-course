@@ -10,7 +10,7 @@ import useMutation from "../../hooks/useMutation";
 import { getCourses, deleteCourse } from "../../services/course";
 
 const ListItem = (props) => {
-    const {data, refetch} = props;
+    const {data, refetch, onNavigate} = props;
     const {onMutation: onDelete} = useMutation(deleteCourse, {
         onSuccess: refetch
     })
@@ -18,6 +18,14 @@ const ListItem = (props) => {
     const onDeleteHandler = (id) => () => {
         const isOk = window.confirm("Apa kamu yakin akan menghapus course ini?")
         if (isOk) onDelete(id)
+    }
+
+    const onEditHandler = (id) => () => {
+        onNavigate(constants.routes.EDIT_COURSE, {
+            state: {
+                id
+            }
+        })
     }
 
     return (
@@ -29,6 +37,7 @@ const ListItem = (props) => {
                         description={course.description}
                         key={index}
                         onDelete={onDeleteHandler(course.courseId)}
+                        onEdit={onEditHandler(course.courseId)}
                     />
                 )
             })}
@@ -51,7 +60,7 @@ const CourseList = (props) => {
             </Button>
             {
                 data?.data?.length > 0 ?
-                <ListItem data={data?.data} refetch={refetch} /> :
+                <ListItem data={data?.data} refetch={refetch} onNavigate={onNavigate} /> :
                 <EmptyState text="Data masih kosong" />
             }
         </StyledContainer>
