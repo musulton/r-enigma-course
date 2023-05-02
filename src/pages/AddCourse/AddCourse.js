@@ -10,6 +10,7 @@ import useMutation from "../../hooks/useMutation";
 import { addCourse } from "../../services/course";
 import useQuery from "../../hooks/useQuery";
 import { getCourseTypes } from "../../services/courseType";
+import { useNavigate } from "react-router-dom";
 
 const FORM_LIST = [
     { id: "title", label: "Title", type: "text", placeholder: "Enter course title" },
@@ -20,7 +21,7 @@ const FORM_LIST = [
 ]
 
 const AddCourse = (props) => {
-    const {onNavigate} = props
+    const onNavigate = useNavigate()
     const {getter, setter} = useAddCourse()
     const {onMutation, loading} = useMutation(addCourse, {
         onSuccess: () => {

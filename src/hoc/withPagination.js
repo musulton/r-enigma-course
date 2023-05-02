@@ -4,10 +4,11 @@ import useQuery from "../hooks/useQuery";
 import EmptyState from "../components/EmptyState";
 import {Button} from "react-bootstrap";
 import StyledContainer from "../components/StyledContainer";
+import { useNavigate } from "react-router-dom";
 
 const withPagination = (Component, opts) => {
     return (props) => {
-        const {onNavigate} = props
+        const onNavigate = useNavigate()
         const [currentPage, onChangeCurrentPage] = React.useState(1)
         const {data, refetch} = useQuery(opts.query, {
             params: currentPage

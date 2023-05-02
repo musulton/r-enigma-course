@@ -11,6 +11,7 @@ import {onChangeData} from "../../utils/function";
 import FormSelect from "../../components/FormSelect";
 import constants from "../../constants";
 import useQuery from "../../hooks/useQuery";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const FORM_LIST = [
     { id: "title", label: "Title", type: "text", placeholder: "Enter course title" },
@@ -21,7 +22,8 @@ const FORM_LIST = [
 ]
 
 const EditCourse = (props) => {
-    const {onNavigate, params} = props
+    const params = useLocation()
+    const onNavigate = useNavigate()
     const {values, setValues} = useEditCourse(params?.state?.id)
 
     const {onMutation, loading} = useMutation(editCourse, {

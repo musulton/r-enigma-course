@@ -4,9 +4,11 @@ import constants from "../../constants";
 import useMutation from "../../hooks/useMutation";
 import { getCourses, deleteCourse, downloadCourseFile } from "../../services/course";
 import withPagination from "../../hoc/withPagination";
+import { useNavigate } from "react-router-dom";
 
 const ListItem = (props) => {
-    const {data, refetch, onNavigate} = props;
+    const {data, refetch} = props;
+    const onNavigate = useNavigate();
     const {onMutation: onDelete} = useMutation(deleteCourse, {
         onSuccess: refetch
     })
