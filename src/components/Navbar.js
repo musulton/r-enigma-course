@@ -13,29 +13,34 @@ const menu = [
     { path: "#", menuName: "Course Types" },
 ]
 
-const NavBar = () => {
+const NavBar = (props) => {
+  const {setIsLoggedIn} = props;
 
-    return (
-        <Navbar bg="light" expand="light" sticky={"top"}>
-            <Container>
-                <Navbar.Brand>Enigma Course</Navbar.Brand>
-                <StyledNav>
-                    {menu?.map((item, index) => (
-                        <NavLink
-                            to={item.path}
-                            className="nav-link mx-3"
-                            key={index}
-                        >
-                            {item.menuName}
-                        </NavLink>
-                    ))}
-                    <Button variant="danger" className="mx-3">
-                        Logout
-                    </Button>
-                </StyledNav>
-            </Container>
-        </Navbar>
-    )
+  const onLogout = () => {
+    setIsLoggedIn(false)
+  }
+
+  return (
+      <Navbar bg="light" expand="light" sticky={"top"}>
+          <Container>
+              <Navbar.Brand>Enigma Course</Navbar.Brand>
+              <StyledNav>
+                  {menu?.map((item, index) => (
+                      <NavLink
+                          to={item.path}
+                          className="nav-link mx-3"
+                          key={index}
+                      >
+                          {item.menuName}
+                      </NavLink>
+                  ))}
+                  <Button variant="danger" className="mx-3" onClick={onLogout}>
+                      Logout
+                  </Button>
+              </StyledNav>
+          </Container>
+      </Navbar>
+  )
 }
 
 export default NavBar;

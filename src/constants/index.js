@@ -3,6 +3,7 @@ export default {
     COURSE_LIST: "/course-list",
     ADD_COURSE: "/add-course",
     EDIT_COURSE: "/edit-course",
-    HOME: "/"
+    HOME: "/",
+    LOGIN: "/login"
   }
 }
