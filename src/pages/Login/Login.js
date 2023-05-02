@@ -5,12 +5,27 @@ import StyledContainer from "../../components/StyledContainer";
 import {onChangeText} from "../../utils/function";
 import {useNavigate} from "react-router-dom";
 import constants from "../../constants";
+import { setToken } from "../../utils/token";
+import useMutation from "../../hooks/useMutation";
+import { login } from "../../services/auth";
 
-function Login(props) {
-    const {setIsLoggedIn} = props
+function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const onNavigate = useNavigate();
+    const {onMutation} = useMutation(login, {
+      onSuccess: (data) => {
+        const token = data?.data
+        
+        if (token) {
+          setToken(token)
+          onNavigate(constants.routes.HOME);
+        }
+      },
+      onError: () => {
+        alert("Terdapat kesalahan")
+      }
+    })
 
     function validateForm() {
         return email.length > 0 && password.length > 0;
@@ -18,8 +33,9 @@ function Login(props) {
 
     function handleSubmit(event) {
         event.preventDefault();
-        setIsLoggedIn(true);
-        onNavigate(constants.routes.HOME);
+        onMutation({
+          email, password
+        })
     }
 
     return (

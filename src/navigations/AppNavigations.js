@@ -1,5 +1,5 @@
 import React from "react";
-import {Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 
 import CourseList from "../pages/CourseList";
 import AddCourse from "../pages/AddCourse";
@@ -10,21 +10,21 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import NotFound from "../pages/NotFound";
+import { getToken } from "../utils/token";
 
 const AppNavigations = () => {
-    const [isLoggedIn, setIsLoggedIn] = React.useState(false)
-    
+    const hasToken = getToken()
     return (
         <Routes>
             <Route
                 path={constants.routes.LOGIN}
                 index={true}
-                element={<Login setIsLoggedIn={setIsLoggedIn} />}
+                element={hasToken ? <Navigate to={constants.routes.HOME} replace /> : <Login />}
             />
             <Route path={"*"} element={<NotFound />} />
             <Route
                 path={constants.routes.HOME}
-                element={<ProtectedRoutes isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }
+                element={<ProtectedRoutes /> }
             >
                 <Route index={true} path={constants.routes.HOME} element={<Home />} />
                 <Route path={constants.routes.COURSE_LIST} element={<CourseList />} />

@@ -3,6 +3,7 @@ import {Button, Container, Navbar, Nav} from 'react-bootstrap'
 import {NavLink} from "react-router-dom";
 import styled from "styled-components";
 import constants from "../constants";
+import { removeToken } from "../utils/token";
 
 const StyledNav = styled(Nav)`
   flex-direction: row;
@@ -13,11 +14,10 @@ const menu = [
     { path: "#", menuName: "Course Types" },
 ]
 
-const NavBar = (props) => {
-  const {setIsLoggedIn} = props;
-
+const NavBar = () => {
   const onLogout = () => {
-    setIsLoggedIn(false)
+    removeToken()
+    window.location.reload()
   }
 
   return (
