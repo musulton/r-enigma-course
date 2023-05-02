@@ -1,7 +1,7 @@
 import api from "../configs/api";
 
-export const getCourses = () => {
-    return api.get("/courses")
+export const getCourses = (page) => {
+    return api.get(`/courses?page=${page}&size=3`)
 }
 
 export const getCourseById = (id) => {

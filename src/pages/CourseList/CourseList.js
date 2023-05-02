@@ -1,13 +1,9 @@
-import {Button} from "react-bootstrap";
-
-import EmptyState from "../../components/EmptyState";
 import CourseItem from "./components/CourseItem";
 import {StyledListGroup} from "./CourseList.styled";
-import StyledContainer from "../../components/StyledContainer";
 import constants from "../../constants";
-import useQuery from "../../hooks/useQuery";
 import useMutation from "../../hooks/useMutation";
 import { getCourses, deleteCourse } from "../../services/course";
+import withPagination from "../../hoc/withPagination";
 
 const ListItem = (props) => {
     const {data, refetch, onNavigate} = props;
@@ -45,26 +41,8 @@ const ListItem = (props) => {
     )
 }
 
-const CourseList = (props) => {
-    const {onNavigate} = props;
-    const {data, refetch} = useQuery(getCourses);
-
-    return (
-        <StyledContainer>
-            <h1>Course List Page</h1>
-            <Button
-                variant="success"
-                onClick={() => onNavigate(constants.routes.ADD_COURSE)}
-            >
-                Add Course
-            </Button>
-            {
-                data?.data?.length > 0 ?
-                <ListItem data={data?.data} refetch={refetch} onNavigate={onNavigate} /> :
-                <EmptyState text="Data masih kosong" />
-            }
-        </StyledContainer>
-    )
-}
-
-export default CourseList
+export default withPagination(ListItem, {
+    query: getCourses,
+    titlePage: "Add Course",
+    buttonAddRoute: constants.routes.ADD_COURSE
+})
