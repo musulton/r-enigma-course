@@ -5,6 +5,7 @@ import FormInput from "../../components/FormInput";
 import FormSelect from "../../components/FormSelect";
 import useAddCourse from "./useAddCourse";
 import {StyledTitle, StyledContainer} from "./AddCourse.styled";
+import constants from "../../constants";
 
 const FORM_LIST = [
     { id: "title", label: "Title", type: "text", placeholder: "Enter course title" },
@@ -14,8 +15,18 @@ const FORM_LIST = [
     { id: "duration", label: "Duration", type: "text", placeholder: "Enter course duration" }
 ]
 
-const AddCourse = () => {
+const AddCourse = (props) => {
+    const {onNavigate} = props
     const {getter, setter} = useAddCourse()
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+    }
+
+    const onCancel = (e) => {
+        e.preventDefault()
+        onNavigate(constants.routes.COURSE_LIST)
+    }
 
     return (
         <StyledContainer>
@@ -40,8 +51,8 @@ const AddCourse = () => {
                     ]}
                 />
                 <ButtonGroup>
-                    <Button variant="success" size={"lg"}>Submit</Button>
-                    <Button variant="secondary" size={"lg"}>Cancel</Button>
+                    <Button variant="success" size={"lg"} onClick={onSubmit}>Submit</Button>
+                    <Button variant="secondary" size={"lg"} onClick={onCancel}>Cancel</Button>
                 </ButtonGroup>
             </Form>
         </StyledContainer>
