@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmptyState component should render correctly 1`] = `
+<DocumentFragment>
+  <h3
+    class="sc-bgqQcB bgrhhs"
+  >
+    Data is empty
+  </h3>
+</DocumentFragment>
+`;

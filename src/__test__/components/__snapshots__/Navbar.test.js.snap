@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navbar component should render correctly 1`] = `
+<DocumentFragment>
+  <nav
+    class="navbar navbar-expand-light navbar-light bg-light sticky-top"
+  >
+    <div
+      class="container"
+    >
+      <span
+        class="navbar-brand"
+      >
+        Enigma Course
+      </span>
+      <div
+        class="sc-bgqQcB koDmhZ navbar-nav"
+      >
+        <a
+          class="nav-link mx-3"
+          href="/course-list"
+        >
+          Courses
+        </a>
+        <a
+          aria-current="page"
+          class="nav-link mx-3 active"
+          href="/"
+        >
+          Course Types
+        </a>
+        <button
+          class="mx-3 btn btn-danger"
+          type="button"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+  </nav>
+</DocumentFragment>
+`;
